@@ -14,12 +14,30 @@ public class MyFrame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //что делает крестик
         setLocation((toolkit.getScreenSize().width - WIDTH)/2,(toolkit.getScreenSize().height - HEIGHT)/2); //ставим наш фрэйм в центр
 
-        boxFormulaType.add(Box.createHorizontalGlue());
-        addRadioButton("Formula №1", 1); //добавили кнопку
-        boxFormulaType.add(Box.createHorizontalStrut(20)); //добавляем пустую область
-        addRadioButton("Formula №2", 2);
-        boxFormulaType.add(Box.createHorizontalGlue());
-        boxFormulaType.setBorder(BorderFactory.createLineBorder(Color.YELLOW,2)); //граница
+        boxFormula1.add(Box.createHorizontalGlue());
+        Box boxButton1 = Box.createHorizontalBox();
+        addRadioButton("Formula №1", 1, boxButton1);
+        String form1 = "sin(ln(y) + sin(pi*y^2)) * (x^2 + sin(z) + e^cos(z)^1/4";
+        boxFormula1.add(Box.createHorizontalGlue());
+        Box boxForm = Box.createHorizontalBox();
+        boxForm.add(new JLabel(form1));
+        boxFormula1.add(Box.createHorizontalGlue());
+        boxFormula1.add(boxButton1);
+        boxFormula1.add(boxForm);
+        boxFormula1.add(Box.createHorizontalGlue());
+        boxFormula1.setBorder(BorderFactory.createLineBorder(Color.YELLOW,2)); //граница
+
+        //boxFormula2.add(Box.createHorizontalGlue());
+        //Box boxButton2 = Box.createHorizontalBox();
+        //addRadioButton("Formula №2", 2, boxButton2);
+        //String form2 = "(cos(e^x) + ln(1+y)^2 + sqrt(e^cos(x) + sin^2(pi*z)) + sqrt(1/x) + cos(y^2))^sin(z)";
+        ///boxFormula2.add(Box.createHorizontalGlue());
+        //Box boxForm2 = Box.createHorizontalBox();
+        //boxForm2.add(new JLabel(form2));
+        //boxFormula2.add(boxButton2);
+        //boxFormula2.add(boxForm);
+        //boxFormula2.add(Box.createHorizontalGlue());
+        //boxFormula2.setBorder(BorderFactory.createLineBorder(Color.YELLOW,2)); //граница
 
         JLabel labelX = new JLabel("X: ");
         textFieldX = new JTextField("0",10);
@@ -103,7 +121,8 @@ public class MyFrame extends JFrame{
 
         Box contentBox = Box.createVerticalBox();
         contentBox.add(Box.createVerticalGlue());
-        contentBox.add(boxFormulaType);
+        contentBox.add(boxFormula1);
+        contentBox.add(boxFormula2);
         contentBox.add(boxVariables);
         contentBox.add(boxResult);
         contentBox.add(boxButtons);
@@ -123,7 +142,8 @@ public class MyFrame extends JFrame{
 
     private ButtonGroup radioButtons = new ButtonGroup();
 
-    private Box boxFormulaType = Box.createHorizontalBox();
+    private Box boxFormula1 = Box.createVerticalBox();
+    private Box boxFormula2 = Box.createHorizontalBox();
 
     private int formulaID = 1;
 
@@ -131,7 +151,7 @@ public class MyFrame extends JFrame{
     private Toolkit toolkit = Toolkit.getDefaultToolkit();
     private JLabel label = new JLabel();
 
-    private void addRadioButton(String buttonName, final int formulaID){
+    private void addRadioButton(String buttonName, final int formulaID, Box box){
         JRadioButton button = new JRadioButton(buttonName);
         button.addActionListener(new ActionListener() {
             @Override
@@ -140,7 +160,7 @@ public class MyFrame extends JFrame{
             }
         });
         radioButtons.add(button);
-        boxFormulaType.add(button);
+        box.add(button);
     }
 
     public double formula1(double x, double y, double z){
