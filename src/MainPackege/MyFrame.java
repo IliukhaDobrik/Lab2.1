@@ -16,6 +16,7 @@ public class MyFrame extends JFrame{
     private JTextField textFieldMem = new JTextField();
 
     private ButtonGroup radioButtons = new ButtonGroup();
+    private ButtonGroup radioButtons2 = new ButtonGroup();
 
     private Box boxFormula1 = Box.createVerticalBox();
     private Box boxFormula2 = Box.createVerticalBox();
@@ -23,9 +24,9 @@ public class MyFrame extends JFrame{
     private int formulaID = 1;
 
     private int memID = 1;
-    private Double mem1 = 1d;
-    private Double mem2 = 2d;
-    private Double mem3 = 3d;
+    private Double mem1 = 0d;
+    private Double mem2 = 0d;
+    private Double mem3 = 0d;
 
     MyFrame(){
         setTitle("Калькулятор");
@@ -68,7 +69,7 @@ public class MyFrame extends JFrame{
         boxVariables.add(Box.createHorizontalGlue());
 
         JLabel labelForResult = new JLabel("Результат:");
-        textFieldResult = new JTextField("0", 10);
+        textFieldResult = new JTextField("0", 15);
         textFieldResult.setMaximumSize(textFieldResult.getPreferredSize());
 
         Box boxResult = Box.createHorizontalBox();
@@ -92,7 +93,7 @@ public class MyFrame extends JFrame{
         boxRadio.add(Box.createHorizontalGlue());
         Box boxField = Box.createHorizontalBox();
         boxField.add(Box.createHorizontalGlue());
-        textFieldMem = new JTextField("0",10);
+        textFieldMem = new JTextField("0",15);
         textFieldMem.setMaximumSize(textFieldY.getPreferredSize());
         boxField.add(textFieldMem);
         boxField.add(Box.createHorizontalGlue());
@@ -117,7 +118,7 @@ public class MyFrame extends JFrame{
                             mem2+=formula1(x,y,z);
                             textFieldMem.setText(mem2.toString());
                         }
-                        else {
+                        if (memID == 3) {
                             mem3+=formula1(x,y,z);
                             textFieldMem.setText(mem3.toString());
                         }
@@ -131,7 +132,7 @@ public class MyFrame extends JFrame{
                             mem2+=formula2(x,y,z);
                             textFieldMem.setText(mem2.toString());
                         }
-                        else {
+                        if (memID == 3) {
                             mem3+=formula2(x,y,z);
                             textFieldMem.setText(mem3.toString());
                         }
@@ -175,6 +176,24 @@ public class MyFrame extends JFrame{
             }
         });
 
+        JButton MCReset = new JButton("MC");
+        MCReset.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                if (memID == 1){
+                    mem1=0d;
+                    textFieldMem.setText(mem1.toString());
+                }
+                if (memID == 2){
+                    mem2=0d;
+                    textFieldMem.setText(mem2.toString());
+                }
+                if (memID == 3){
+                    mem3=0d;
+                    textFieldMem.setText(mem3.toString());
+                }
+            }
+        });
+
         Box boxButtons = Box.createHorizontalBox();
         boxButtons.add(Box.createHorizontalGlue());
         boxButtons.add(memCalc);
@@ -182,9 +201,10 @@ public class MyFrame extends JFrame{
         boxButtons.add(buttonCalc);
         boxButtons.add(Box.createHorizontalStrut(30));
         boxButtons.add(buttonReset);
+        boxButtons.add(Box.createHorizontalStrut(30));
+        boxButtons.add(MCReset);
         boxButtons.add(Box.createHorizontalGlue());
-        boxButtons.setBorder(
-                BorderFactory.createLineBorder(Color.GREEN,2));
+        boxButtons.setBorder(BorderFactory.createLineBorder(Color.GREEN,2));
 
         Box contentBox = Box.createVerticalBox();
         contentBox.add(Box.createVerticalGlue());
@@ -254,7 +274,7 @@ public class MyFrame extends JFrame{
                 }
             }
         });
-        radioButtons.add(button);
+        radioButtons2.add(button);
         box.add(button);
     }
 
